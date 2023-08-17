@@ -1,0 +1,12 @@
+.picker {
+    position: relative;
+}
+
+.popover {
+    position: absolute;
+    z-index: 1000;
+    top: calc(100% + 2px);
+    left: 0;
+    border-radius: 9px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}

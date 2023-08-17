@@ -38,8 +38,6 @@ export function PageForm (props: FormProps<PageLayout>){
 
   return (
   <div>
-    <fieldset className="fieldset my-4">
-    <legend>Page</legend>
     <div className="field">
       <label className="label">Dimension</label>
       <div className="control">
@@ -97,9 +95,6 @@ export function PageForm (props: FormProps<PageLayout>){
         </div>
       </div>
     </div>
-
-    </fieldset>
-
   </div>
   )
 }

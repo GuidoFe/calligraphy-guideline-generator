@@ -3,7 +3,7 @@ import {convertToMm} from '@/utils'
 
 export enum PageDimension {A5 = "A5", A4 = "A4", Letter = "Letter", A3 = "A3", Custom = "Custom"}
 
-export function getPageDimension(layout: PageLayout): {w: number, h: number} {
+export function getPageDimension(layout: PageLayout, nw: number): {w: number, h: number} {
     let d: {w: number, h: number} = {w: 0, h: 0}
     switch(layout.dimensions) {
         case PageDimension.A5: 
@@ -28,8 +28,8 @@ export function getPageDimension(layout: PageLayout): {w: number, h: number} {
             }; break;
         case PageDimension.Custom: 
             d = {
-                w: convertToMm(layout.width.value, layout.width.unit),
-                h: convertToMm(layout.height.value, layout.height.unit),
+                w: convertToMm(layout.width.value, layout.width.unit, nw),
+                h: convertToMm(layout.height.value, layout.height.unit, nw),
             }; break;
     }
     let min = Math.min(d.w, d.h);
@@ -71,17 +71,17 @@ export interface FormattedPageLayout {
     margin: FormattedMargins
 }
 
-export function getFormattedPageLayout(p: PageLayout): FormattedPageLayout {
-    let dimensions = getPageDimension(p);
+export function getFormattedPageLayout(p: PageLayout, nw: number): FormattedPageLayout {
+    let dimensions = getPageDimension(p, nw);
     return {
         isPortrait: p.isPortrait,
         width: dimensions.w,
         height: dimensions.h,
         margin: {
-            left: convertToMm(p.margin.left, p.margin.unit),
-            right: convertToMm(p.margin.right, p.margin.unit),
-            top: convertToMm(p.margin.top, p.margin.unit),
-            bottom: convertToMm(p.margin.bottom, p.margin.unit)
+            left: convertToMm(p.margin.left, p.margin.unit, nw),
+            right: convertToMm(p.margin.right, p.margin.unit, nw),
+            top: convertToMm(p.margin.top, p.margin.unit, nw),
+            bottom: convertToMm(p.margin.bottom, p.margin.unit, nw)
         }
     }
 }

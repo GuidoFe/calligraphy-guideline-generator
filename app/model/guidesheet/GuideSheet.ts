@@ -14,13 +14,16 @@ export interface GuideSheet {
         ascender: ParallelLine,
         capline: ParallelLine,
         waistline: ParallelLine,
-        baseLine: Line,
+        baseline: Line,
         secondaryDescender: ParallelLine,
         descender: ParallelLine,
         diagonals: DiagonalLine,
         lineEnds: Line
     }
-    style: LineStyle[]
+    style: LineStyle[],
+    titleTextSize: number,
+    dateTextSize: number,
+    font: string
 }
 
 export interface FormattedGuideSheet {
@@ -37,15 +40,21 @@ export interface FormattedGuideSheet {
         diagonals: FormattedDiagonalLine,
         lineEnds: FormattedLine
     }
-    style: {[name: string]: FormattedLineStyle}
+    style: {[name: string]: FormattedLineStyle},
+    titleBaselinePadding: number,
+    dateLineLength: number,
+    titleTextSize: number,
+    dateTextSize: number,
+    font: string
 }
 
 export function getFormattedGuideSheet(gs: GuideSheet): FormattedGuideSheet {
+    let nw = gs.nibWidth;
     let styles: {[name: string]: FormattedLineStyle} = {};
     for (let style of gs.style) {
-        styles[style.name] = getFormattedLineStyle(style)
+        styles[style.name] = getFormattedLineStyle(style, nw)
     }
-    let xHeight = convertToMm(gs.row.waistline.offset.value, gs.row.waistline.offset.unit);
+    let xHeight = convertToMm(gs.row.waistline.offset.value, gs.row.waistline.offset.unit, nw);
     let waistLine: ParallelLine = {
         ...gs.row.waistline,
         //So xHeight will be added to the calculations, ending up with the previous offset value
@@ -58,16 +67,18 @@ export function getFormattedGuideSheet(gs: GuideSheet): FormattedGuideSheet {
     }
     return {
         ...gs,
-        pageLayout: getFormattedPageLayout(gs.pageLayout),
+        pageLayout: getFormattedPageLayout(gs.pageLayout, nw),
         lineSpacing: convertToMm(gs.lineSpacing.value, gs.lineSpacing.unit, gs.nibWidth),
         row: {
             lines: [gs.row.ascender, gs.row.capline, waistLine, gs.row.secondaryDescender, gs.row.descender]
                 .filter(l => l.isActive)
-                .map(l => getFormattedLine(l, gs.nibWidth, xHeight) as FormattedParallelLine),
-            baseline: getFormattedLine(gs.row.baseline, gs.nibWidth, xHeight),
-            diagonals: getFormattedLine(gs.row.diagonals, gs.nibWidth, xHeight) as FormattedDiagonalLine,
-            lineEnds: getFormattedLine(gs.row.lineEnds, gs.nibWidth, xHeight)
+                .map(l => getFormattedLine(l, nw, xHeight) as FormattedParallelLine),
+            baseline: getFormattedLine(gs.row.baseline, nw, xHeight),
+            diagonals: getFormattedLine(gs.row.diagonals, nw, xHeight) as FormattedDiagonalLine,
+            lineEnds: getFormattedLine(gs.row.lineEnds, nw, xHeight)
         },
-        style: styles
+        style: styles,
+        titleBaselinePadding: 3,
+        dateLineLength: 40,
     }
 }

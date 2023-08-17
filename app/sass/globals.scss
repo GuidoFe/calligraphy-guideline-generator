@@ -1,0 +1,118 @@
+@charset "utf-8";
+@import '../../node_modules/bulma/bulma.sass';
+
+table {
+    text-align: center;
+}
+
+.c-valign-top {
+    vertical-align: top;
+}
+
+.c-valign-center {
+    vertical-align: middle;
+}
+
+.c-valign-bottom {
+    vertical-align: bottom;
+}
+
+.c-halign-left {
+    text-align: left;
+}
+
+.c-halign-center {
+    text-align: center;
+}
+
+.c-halign-right {
+    text-align: right;
+}
+
+.c-align-center {
+    text-align: center;
+    vertical-align: center;
+}
+
+@media(max-width: 768px) {
+    .generator-page {
+        overflow: auto;
+    }
+
+    .preview-container {
+        width: 80vw;
+        height: 112.8vw; 
+        margin-left: 10vw;
+    }
+
+    .form-column > div {
+        padding: 30px;
+        width: 100%;
+    }
+}
+
+@media(min-width: 769px) {
+    .generator-page {
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        margin: 0px;
+       // align-items: stretch;
+    }
+    .form-column {
+        direction: rtl;
+        min-height: 0;
+        max-height: 100%;
+        overflow: auto;
+    }
+    
+    .form-column > div {
+        direction: ltr; 
+        padding: 20px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .PagePreview {
+        height: 100%;
+    }
+
+    .preview-container {
+        position: relative;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: inherit;
+    }
+
+    #preview {
+        position: absolute;
+        left: 0%;
+        right: 0%;
+    }
+}
+
+#preview {
+    background: lightgrey;
+}
+
+.PagePreview button {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    z-index: 1000;
+}
+
+.generator-page > .column {
+    padding: 0px;
+}
+
+#generate-button {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+}

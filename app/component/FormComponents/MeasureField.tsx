@@ -3,7 +3,6 @@ import {FieldFormProps, Measure, Unit} from '@/types';
 import React, {useState, useEffect, ChangeEvent} from 'react'
 import classNames from 'classnames';
 
-
 export function MeasureField (props: FieldFormProps<Measure>) {
   const [value, setValue] = useState(props.node.value.toString());
   useEffect(() => {
@@ -40,10 +39,10 @@ export function MeasureField (props: FieldFormProps<Measure>) {
           <div className="control">
             <div className="select">
               <select value={props.node.unit} onChange={onChangeUnit}>
-                 {(Object.keys(Unit) as Array<keyof typeof Unit>)
-                   .filter(key => key != Unit.pw || props.node.allowPW)
+                 {Object.keys(Unit)
+                   .filter(key => key != Unit.nw.toString() || props.node.allowPW)
                    .map(key => 
-                    <option key={key} value={value}>{key}</option>
+                    <option key={key} value={key}>{key}</option>
                    )
                 } 
               </select>

@@ -14,7 +14,7 @@ export interface ParallelLine extends Line {
 }
 
 export interface DiagonalLine extends Line {
-    angle: Number,
+    angle: number,
     gap: Measure
 }
 
@@ -48,6 +48,7 @@ export function getFormattedLine(line: Line, nb: number, xHeight: number): Forma
     if (d.gap != undefined) {
         return {
             ...d,
+            angle: d.angle,
             gap: convertToMm(d.gap.value, d.gap.unit, nb)
         } as FormattedDiagonalLine;
     }

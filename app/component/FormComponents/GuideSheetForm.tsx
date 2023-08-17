@@ -29,6 +29,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
 
   return (
   <form className='GuideSheetForm'>
+    <h3 className="title is-3">Page</h3>
     <PageForm node={props.node.pageLayout} updateNode={n => {
       props.updateNode({
         ...props.node,
@@ -51,7 +52,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
       })
     }}/>
     <div className="field">
-      <label className="label">Nib Width (Optional)</label>
+      <label className="label">Nib Width (optional)</label>
       <div className="control">
         <div className="field has-addons">
           <div className="control">
@@ -73,8 +74,9 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
         </div>
       </div>
     </div>
-    <fieldset className="fieldset">
-      <legend>Decorations</legend>
+    <hr />
+    <div>
+      <h3 className="title is-3">Decorations</h3>
       <label className="checkbox label my-2"> 
         <input type="checkbox" className="mr-2" value="showtitle" checked={props.node.showTitle} onChange={_ =>{
           props.updateNode({
@@ -117,10 +119,11 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
         }}/>
         Show nib ladder
       </label>
-    </fieldset>
-    <fieldset className="fieldset">
-      <legend>Lines</legend>
-      <LineForm node={props.node.row.ascender} updateNode={n => {
+    </div>
+    <hr />
+    <div>
+      <h3 className="title is-3">Lines</h3>
+      <LineForm isActivable={props.node.row.ascender.isOptional} node={props.node.row.ascender} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
@@ -129,7 +132,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
           }
         })
       }}/>
-      <LineForm node={props.node.row.capline} updateNode={n => {
+      <LineForm isActivable={props.node.row.capline.isOptional} node={props.node.row.capline} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
@@ -138,7 +141,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
           }
         })
       }}/>
-      <LineForm node={props.node.row.waistline} updateNode={n => {
+      <LineForm isActivable={props.node.row.waistline.isOptional} node={props.node.row.waistline} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
@@ -156,7 +159,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
           }
         })
       }}/>
-      <LineForm node={props.node.row.secondaryDescender} updateNode={n => {
+      <LineForm isActivable={props.node.row.secondaryDescender.isOptional} node={props.node.row.secondaryDescender} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
@@ -165,7 +168,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
           }
         })
       }}/>
-      <LineForm node={props.node.row.descender} updateNode={n => {
+      <LineForm isActivable={props.node.row.descender.isOptional} node={props.node.row.descender} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
@@ -174,7 +177,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
           }
         })
       }}/>
-      <LineForm node={props.node.row.diagonals} updateNode={n => {
+      <LineForm isActivable={props.node.row.diagonals.isOptional} node={props.node.row.diagonals} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
@@ -183,7 +186,7 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
           }
         })
       }}/>
-      <LineForm node={props.node.row.lineEnds} updateNode={n => {
+      <LineForm isActivable={props.node.row.lineEnds.isOptional} node={props.node.row.lineEnds} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
@@ -192,11 +195,10 @@ export function GuideSheetForm (props: FormProps<GuideSheet>){
           }
         })
       }}/>
-    </fieldset>
-    <fieldset className="fieldset">
-      <legend>Styles</legend>
-      {htmlStyles}
-    </fieldset>
+    </div>
+    <hr />
+    <h3 className="title is-3">Styles</h3>
+    {htmlStyles}
 
   </form>
   )
