@@ -20,7 +20,7 @@ export interface GuideSheet {
         diagonals: DiagonalLine,
         lineEnds: Line
     }
-    style: LineStyle[],
+    style: Array<LineStyle>,
     titleTextSize: number,
     dateTextSize: number,
     font: string

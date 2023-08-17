@@ -1,27 +1,24 @@
 'use client'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { PagePreview } from '@/app/component/PagePreview';
 import { GuideSheetForm } from '../component/FormComponents';
 import '@/app/sass/form.scss'
 import defaultGuideSheet from './defaultConfig';
-import { draw } from '../component/drawGuidesheet';
-import { getFormattedGuideSheet } from '../model/guidesheet';
-import { DocumentFactory, generatePdf } from '../factory/DocumentFactory';
-
 
 export default function Page() { 
   const [guideSheet, setGuideSheet] = useState(defaultGuideSheet);
   const generate = () => {
-    generatePdf(guideSheet).then(arr => {
-      const blob = new Blob([arr], {type: 'application/pdf'});
-      const a = document.createElement("a");
-      a.href=window.URL.createObjectURL(blob);
-      a.download = "guidesheet.pdf";
-      a.style.position = "fixed";
-      a.target = "_blank";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+    if (window === undefined) return;
+    fetch("/api/guidesheet", {
+      method: "POST", 
+      body: JSON.stringify(guideSheet),
+      headers: new Headers([
+        ["Accept", "application/pdf"],
+        ["Content-Type", "application/json"]
+      ])
+    }).then(res => res.blob()).then(blob => {
+      let file = URL.createObjectURL(blob);
+      window.open(file, "_blank");
     });
   }
 
@@ -32,15 +29,15 @@ export default function Page() {
         <div>
           <div className="title is-2">Guidesheet Generator</div>
           <GuideSheetForm node={guideSheet} updateNode={(n) => setGuideSheet(n)}/>
+          <button id="generate-button" className="button is-primary is-large" onClick={generate}>
+            Generate
+          </button>
         </div>
       </div>
       <div className="preview-column column is-three-fifths">
         <PagePreview gs={guideSheet}/>
       </div>
     </div>
-    <button id="generate-button" className="button is-primary" onClick={generate}>
-      Generate
-    </button>
   </main>
   );
 }

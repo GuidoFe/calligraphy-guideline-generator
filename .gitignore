@@ -1,54 +1,35 @@
-# Miscellaneous
-*.java.hsp
-*.sonarj
-*.sw*
-.DS_Store
-build.sh
-integration-repo
-ivy-cache
-argfile*
-activemq-data/
-classes/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Log files
-jxl.log
-jmx.log
-derby.log
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# Gradle artifacts
-.gradle
-.gradletasknamecache
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
 /build
-buildSrc/build
-/spring-*/build
-/framework-bom/build
-/framework-docs/build
-/integration-tests/build
-/src/asciidoc/build
-spring-test/test-output/
 
-# Maven artifacts
-pom.xml
-/target/
+# misc
+.DS_Store
+*.pem
 
-# Eclipse artifacts, including WTP generated manifests
-bin
-.classpath
-.project
-.settings
-.springBeans
-spring-*/src/main/java/META-INF/MANIFEST.MF
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# IDEA artifacts and output dirs
-*.iml
-*.ipr
-*.iws
-.idea
-out
-test-output
-atlassian-ide-plugin.xml
+# local env files
+.env*.local
 
-# VS Code
-.vscode/
+# vercel
+.vercel
 
-cached-antora-playbook.yml
+# typescript
+*.tsbuildinfo
+next-env.d.ts

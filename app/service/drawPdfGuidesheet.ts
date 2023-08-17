@@ -1,8 +1,8 @@
-import { rgb,PDFPage, PDFPageDrawLineOptions, Color, LineCapStyle, pushGraphicsState, rectangle, clipEvenOdd, endPath, popGraphicsState, PDFOperator, PDFDocument, PDFFont } from "pdf-lib";
+import { rgb,PDFPage, Color, LineCapStyle, pushGraphicsState, rectangle, clipEvenOdd, endPath, popGraphicsState, PDFOperator, PDFFont } from "pdf-lib";
 import { FormattedGuideSheet, FormattedLine, FormattedLineStyle } from "../model/guidesheet"
 import { Stroke } from "@/types";
 import { hexToRgb} from "@/utils/ColorUtil"
-import { RelativePoint } from "./RelativePoint";
+import { RelativePoint } from "@/utils/RelativePoint";
 
 function getColor(c: string): Color | null {
     let color = hexToRgb(c);

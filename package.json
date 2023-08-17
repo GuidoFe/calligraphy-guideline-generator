@@ -1,0 +1,42 @@
+{
+  "name": "calligraphy-guideline-generator",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
+    "@types/d3": "^7.4.0",
+    "@types/jsdom": "^21.1.1",
+    "@types/node": "20.4.4",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.14",
+    "classnames": "^2.3.2",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.4.12",
+    "filenamify": "^6.0.0",
+    "jsdom": "^22.1.0",
+    "next": "13.4.12",
+    "pdf-lib": "^1.17.1",
+    "postcss": "8.4.27",
+    "react": "18.2.0",
+    "react-colorful": "^5.6.1",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.10.1",
+    "swr": "^2.2.0",
+    "tailwindcss": "^3.3.3",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@types/blob-stream": "^0.1.30",
+    "@types/file-saver": "^2.0.5",
+    "bulma": "^0.9.4",
+    "localview": "^0.0.9",
+    "node-sass": "^9.0.0"
+  }
+}

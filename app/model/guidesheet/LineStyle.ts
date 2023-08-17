@@ -3,7 +3,7 @@ import { convertToMm } from '@/utils'
 export interface LineStyle {
     name: string,
     width: Measure,
-    color: Color,
+    color: string,
     stroke: Stroke,
     gap?: Measure,
     dashLength?: Measure
@@ -12,7 +12,7 @@ export interface LineStyle {
 export interface FormattedLineStyle {
     name: string,
     width: number,
-    color: Color,
+    color: string,
     stroke: Stroke,
     gap?: number,
     dashLength?: number

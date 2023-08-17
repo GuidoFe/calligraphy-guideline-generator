@@ -94,6 +94,13 @@ table {
         left: 0%;
         right: 0%;
     }
+
+    #generate-button {
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        z-index: 20000;
+    }
 }
 
 #preview {
@@ -102,8 +109,8 @@ table {
 
 .PagePreview button {
     position: absolute;
-    bottom: 1em;
-    left: 1em;
+    bottom: 10px;
+    left: 10px;
     z-index: 1000;
 }
 
@@ -111,8 +118,3 @@ table {
     padding: 0px;
 }
 
-#generate-button {
-    position: fixed;
-    right: 10px;
-    bottom: 10px;
-}
