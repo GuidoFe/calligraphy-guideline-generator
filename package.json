@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "next start -p 80",
+    "deploy": "next start --omit=dev -p 80",
     "lint": "next lint"
   },
   "dependencies": {
