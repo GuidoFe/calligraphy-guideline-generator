@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect} from 'react' 
+import React from 'react' 
 import { PageLayout, PageDimension } from '@/app/model/guidesheet';
 import { FormProps, Measure} from '@/types'
 import { MeasureField } from '.';
@@ -8,34 +8,31 @@ import classNames from 'classnames';
 import {TbFile, TbFileHorizontal} from 'react-icons/tb'
 import { IconType } from 'react-icons';
 
-function isPortrait(w: Measure, h: Measure): boolean {
-  return convertToMm(w.value, w.unit) < convertToMm(h.value, h.unit)
+function isPortrait(w: Measure, h: Measure, nw: number): boolean {
+  return convertToMm(w.value, w.unit, nw) < convertToMm(h.value, h.unit, nw);
 }
 
-
+function OrientationButton(p: {icon: IconType, isActive: boolean, onClick: () => void}) {
+  return (
+    <button
+      type="button"
+      className={classNames(
+        "button", 
+        {
+          "is-info": p.isActive, 
+          "is-selected": p.isActive
+        })
+      }
+      onClick={p.onClick}
+    >
+      <span className="icon">
+        {p.icon({})}
+      </span>
+    </button>
+  )
+}
 
 export function PageForm (props: FormProps<PageLayout>){
-  const OrientationButton = (props: {icon: IconType, isActive: boolean, onClick: () => void}) => {
-    return (
-      <button
-        type="button"
-        className={classNames(
-          "button", 
-          {
-            "is-info": props.isActive, 
-            "is-selected": props.isActive
-          })
-        }
-        onClick={props.onClick}
-      >
-        <span className="icon">
-          {props.icon({})}
-        </span>
-      </button>
-
-    )
-  }
-
   return (
   <div>
     <div className="field">
@@ -46,7 +43,7 @@ export function PageForm (props: FormProps<PageLayout>){
             let newDimension = PageDimension[o.target.value as keyof typeof PageDimension]
             props.updateNode({
               ...props.node,
-              isPortrait: newDimension == PageDimension.Custom ? isPortrait(props.node.width, props.node.height) : props.node.isPortrait,
+              isPortrait: newDimension == PageDimension.Custom ? isPortrait(props.node.width, props.node.height, props.nw) : props.node.isPortrait,
               dimensions: newDimension 
             })
           }}>
@@ -63,17 +60,17 @@ export function PageForm (props: FormProps<PageLayout>){
         <MeasureField label="Width" node={props.node.width} updateNode={n => {
             props.updateNode({
                 ...props.node,
-                isPortrait: isPortrait(n, props.node.height),
+                isPortrait: isPortrait(n, props.node.height, props.nw),
                 width: n
             })
-        }} />
+        }} nw={props.nw} />
         <MeasureField label="Height" node={props.node.height} updateNode={n => {
             props.updateNode({
                 ...props.node,
-                isPortrait: isPortrait(props.node.width, n),
+                isPortrait: isPortrait(props.node.width, n, props.nw),
                 height: n
             })
-        }}/>
+        }} nw={props.nw}/>
       </div>
 
     }

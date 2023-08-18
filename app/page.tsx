@@ -3,7 +3,7 @@ import {useState} from 'react'
 import { PagePreview } from '@/app/component/PagePreview';
 import { GuideSheetForm } from './component/FormComponents';
 import '@/app/sass/form.scss'
-import defaultGuideSheet from './generate/defaultConfig';
+import defaultGuideSheet from '@/conf/defaultConfig';
 
 export default function Page() { 
   const [guideSheet, setGuideSheet] = useState(defaultGuideSheet);
@@ -28,7 +28,12 @@ export default function Page() {
       <div className="form-column column is-gapless">
         <div>
           <div className="title is-2">Guidesheet Generator</div>
-          <GuideSheetForm node={guideSheet} updateNode={(n) => setGuideSheet(n)}/>
+          <GuideSheetForm 
+            node={guideSheet} 
+            updateNode={(n) => setGuideSheet(n)} 
+            nw={guideSheet.nibWidth} 
+            setNw={(n: number) => setGuideSheet({...guideSheet, nibWidth: n})}
+          />
           <button id="generate-button" className="button is-primary is-large" onClick={generate}>
             Generate
           </button>

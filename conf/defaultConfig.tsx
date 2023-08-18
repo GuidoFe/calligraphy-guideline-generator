@@ -1,5 +1,5 @@
 'use client'
-import { GuideSheet, LineStyle, PageDimension } from '../model/guidesheet';
+import { GuideSheet, LineStyle, PageDimension } from '@/app/model/guidesheet';
 import { Stroke, Unit } from '@/types';
 
 let styles: LineStyle[] = [

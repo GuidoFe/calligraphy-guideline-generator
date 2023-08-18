@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Line, ParallelLine, DiagonalLine } from '@/app/model/guidesheet';
 import { FormProps} from '@/types'
 import { DiagonalLineFormPart, ParallelLineFormPart } from '.';
@@ -16,22 +16,26 @@ function completeForm(props: LineFormProps) {
             ...props.node,
             ...n
         })
-    }}/>
+    }} nw={props.nw}/>
     else if ('offset' in props.node)
       return <ParallelLineFormPart node={props.node as ParallelLine} updateNode={n => {
       props.updateNode({
         ...props.node,
         ...n
       })
-      }}/>
+      }} nw={props.nw}/>
     else return null
   }
 
 export function LineForm (props: LineFormProps){
-  const rows = [];
-  for (var style of props.node.possibleStyles) {
-    rows.push(<option value={style} key={style}>{style}</option>)
-  }
+  const rows = useMemo(() => {
+    let r = [];
+    for (var style of props.node.possibleStyles) {
+      r.push(<option value={style} key={style}>{style}</option>)
+    };
+    return r;
+  }, [props.node.possibleStyles]);
+
   return (
     <div className="my-3">
     <ToggleableCard 

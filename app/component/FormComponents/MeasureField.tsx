@@ -1,30 +1,32 @@
 'use client'
 import {FieldFormProps, Measure, Unit} from '@/types';
-import React, {useState, useEffect, ChangeEvent} from 'react'
+import React, {useState, useEffect, ChangeEvent, useCallback} from 'react'
 import classNames from 'classnames';
 
 export function MeasureField (props: FieldFormProps<Measure>) {
   const [value, setValue] = useState(props.node.value.toString());
+  let node = props.node;
+  let updateNode = props.updateNode;
   useEffect(() => {
     setValue(props.node.value.toString());
   }, [props.node.value]);
 
-  const onChangeValue = (o: ChangeEvent<HTMLInputElement>) => {
+  const onChangeValue = useCallback((o: ChangeEvent<HTMLInputElement>) => {
     setValue(o.target.value)
     if (!isNaN(parseFloat(o.target.value))) {
-      props.updateNode({
-        ...props.node,
+      updateNode({
+        ...node,
         value: parseFloat(o.target.value)
       });
     }
-  }
+  }, [updateNode, node]);
 
-  const onChangeUnit = (o: ChangeEvent<HTMLSelectElement>) => {
-    props.updateNode({
-      ...props.node,
+  const onChangeUnit = useCallback((o: ChangeEvent<HTMLSelectElement>) => {
+    updateNode({
+      ...node,
       unit: Unit[o.target.value as keyof typeof Unit]
     })
-  }
+  }, [updateNode, node]);
 
   return (
     <div className="field">

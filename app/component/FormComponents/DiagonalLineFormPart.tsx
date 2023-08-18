@@ -27,7 +27,7 @@ export function DiagonalLineFormPart (props: FormProps<DiagonalLine>){
         ...props.node,
         gap: n
       });
-    }}/>
+    }} nw={props.nw}/>
   </div>
   )
 }

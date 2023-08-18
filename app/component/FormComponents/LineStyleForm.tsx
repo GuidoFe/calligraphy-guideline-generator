@@ -17,7 +17,7 @@ export function LineStyleForm (props: FormProps<LineStyle>){
               ...props.node,
               width: n
             });
-          }}/>
+          }} nw={props.nw}/>
         </div>
 
         <div className="field">
@@ -53,7 +53,7 @@ export function LineStyleForm (props: FormProps<LineStyle>){
               ...props.node,
               dashLength: n
             });      
-          }}/>
+          }} nw={props.nw}/>
         }
         {props.node.stroke != Stroke.Solid &&
           <MeasureField isExpanded={false} label="Gap" node={props.node.gap ?? {value: 3, unit: Unit.mm, allowPW: true}} updateNode={n => {
@@ -61,7 +61,7 @@ export function LineStyleForm (props: FormProps<LineStyle>){
               ...props.node,
               gap: n
             });      
-          }}/>
+          }} nw={props.nw}/>
         }
       </ExpandableCard>
     </div>

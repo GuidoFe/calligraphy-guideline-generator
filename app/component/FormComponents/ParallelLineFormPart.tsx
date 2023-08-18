@@ -15,7 +15,7 @@ export function ParallelLineFormPart (props: FormProps<ParallelLine>){
           ...props.node,
           offset: o
         })
-    }}/>
+    }} nw={props.nw}/>
   </div>
   )
 }

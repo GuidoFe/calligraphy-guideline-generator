@@ -1,8 +1,8 @@
 'use client'
-import { MutableRefObject, RefObject, useEffect } from "react";
+import { RefObject } from "react";
 
 const useClickOutside = (ref: RefObject<HTMLElement>, handler: (m: MouseEvent) => void) => {
-  useEffect(() => {
+  if (typeof window !== 'undefined') {
     let startedInside = false;
     let startedWhenMounted = false;
 
@@ -29,7 +29,7 @@ const useClickOutside = (ref: RefObject<HTMLElement>, handler: (m: MouseEvent) =
       document.removeEventListener("touchstart", validateEventStart);
       document.removeEventListener("click", listener);
     };
-  }, [ref, handler]);
+  }
 };
 
 export default useClickOutside;
