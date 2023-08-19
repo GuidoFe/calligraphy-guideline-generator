@@ -40,7 +40,7 @@ export default function Page() {
         </div>
       </div>
       <div className="preview-column column is-three-fifths">
-        <PagePreview gs={guideSheet}/>
+        //<PagePreview gs={guideSheet}/>
       </div>
     </div>
   </main>
