@@ -74,6 +74,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx.translate(zoomPoint.x, zoomPoint.y);
     ctx.scale(scaleAmount, scaleAmount);
     ctx.translate(-zoomPoint.x, -zoomPoint.y);
+    lastPinchCenter.current = { ...zoomPoint};
     draw(gs, canvasRef.current!!);
     ctx.fillStyle = "red";
     ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
