@@ -36,9 +36,13 @@ table {
 
 @media(max-width: 768px) {
     .preview-container {
-        width: 80vw;
-        height: 112.8vw; 
-        margin-left: 10vw;
+        width: 90vw;
+        height: 126.9vw; 
+
+        button {
+            left: 20px;
+            bottom: 20px;
+        }
     }
 
     .form-column > div {
@@ -47,8 +51,9 @@ table {
     }
     
     #generate-button {
-        position: sticky;
+        position: fixed;
         bottom: 10px;
+        z-index: 10000;
         right: 10px;
     }
 
@@ -80,16 +85,14 @@ table {
         height: 100%;
     }
 
-    .PagePreview {
-        height: 100%;
-    }
-
     .preview-container {
-        position: relative;
-        top: 0%;
-        left: 0%;
+        height: 100%;
         width: 100%;
-        height: inherit;
+
+        button {
+            left: 10px;
+            bottom: 10px;
+        }
     }
 
     #preview {
@@ -104,6 +107,11 @@ table {
         bottom: 10px;
         z-index: 20000;
     }
+    
+    .PagePreview {
+        height: 100%;
+        width: 100%;
+    }
 }
 
 #preview {
@@ -112,5 +120,16 @@ table {
 
 .generator-page > .column {
     padding: 0px;
+}
+
+.preview-container {
+    position: relative;
+    left: 0%;
+    top: 0%;
+    
+    button {
+        position: absolute;
+        margin: 0px;
+    }
 }
 

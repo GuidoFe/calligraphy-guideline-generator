@@ -141,6 +141,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
 
   let pageWidth = gs.pageLayout.width;
   let pageHeight = gs.pageLayout.height;
+
   useEffect(() => {
     if (!canvasRef.current) return;
     console.log("Resizing");
@@ -178,6 +179,10 @@ export function PagePreview(props: {gs: GuideSheet}) {
     cv.addEventListener('touchstart', handleTouchStart, {passive: false});
     cv.addEventListener('touchmove', handleTouchMove, {passive: false})
   }, [gs, handleScrolling, handleTouchStart, handleTouchMove]);
+
+  useEffect(() => {
+    draw(gs, canvasRef.current!!);
+  }, [gs]);
 
   return (
     <div className="PagePreview">
