@@ -10,6 +10,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
   const lastPinchDistanceRef = useRef(0);
   const isMovementStarted = useRef(false);
   const lastTouch = useRef({x: 0, y: 0});
+  const lastPinchCenter = useRef({x: 0, y: 0});
   const firstRender = useRef(true);
   let gs = useMemo(() => getFormattedGuideSheet(props.gs), [props.gs]);
   
@@ -33,6 +34,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
     let deltaY = movementY / currentScale;
     ctx.translate(deltaX, deltaY);
     draw(gs, canvasRef.current!!);
+    ctx.fillStyle = "red";
+    ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
   }, [gs]);
   
   const handleMovementStart = useCallback((e: React.MouseEvent | TouchEvent) => {
@@ -72,6 +75,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx.scale(scaleAmount, scaleAmount);
     ctx.translate(-zoomPoint.x, -zoomPoint.y);
     draw(gs, canvasRef.current!!);
+    ctx.fillStyle = "red";
+    ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
   }, [gs, canvasRef]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
@@ -167,8 +172,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
     cv.addEventListener('wheel', handleScrolling, {passive: false});
     cv.addEventListener('touchstart', handleTouchStart, {passive: false});
     cv.addEventListener('touchmove', handleTouchMove, {passive: false})
-    clear();
-    draw(gs, cv)
   }, [gs, handleScrolling, handleTouchStart, handleTouchMove]);
 
   return (
