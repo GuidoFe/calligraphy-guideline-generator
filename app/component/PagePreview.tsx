@@ -138,7 +138,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
   let pageHeight = gs.pageLayout.height;
   useEffect(() => {
     if (!canvasRef.current) return;
-
+    console.log("Resizing");
     let cv = canvasRef.current!!;
     let ctx = cv.getContext('2d')!!;
     cv.width = cv.parentElement!!.clientWidth;
