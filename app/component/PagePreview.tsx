@@ -82,9 +82,9 @@ export function PagePreview(props: {gs: GuideSheet}) {
     let pxRatio = window.devicePixelRatio;
     if (e.touches.length == 1) {
       let touch = e.touches.item(0)!!;
-      let movementX = lastTouch.current.x - touch.clientX * pxRatio;
-      let movementY = lastTouch.current.y - touch.clientY * pxRatio;
-      lastTouch.current = {x: touch.clientX / pxRatio, y: touch.clientY / pxRatio}
+      let movementX = (lastTouch.current.x - touch.clientX) * pxRatio;
+      let movementY = (lastTouch.current.y - touch.clientY) * pxRatio;
+      lastTouch.current = {x: touch.clientX, y: touch.clientY}
       _handleMovement(e, -movementX, -movementY);
     } else if (e.touches.length == 2){
       let rect = canvasRef.current!!.getBoundingClientRect();
