@@ -1,8 +1,8 @@
 'use client'
-import React, { useMemo, useState} from 'react'
+import React, { useState} from 'react'
 import { ParallelLine, DiagonalLine, GuideSheet } from '@/app/model/guidesheet';
 import { FormProps} from '@/types'
-import { PageForm, MarginForm, MeasureField, LineStyleForm } from '.';
+import { PageForm, MarginForm, MeasureField } from '.';
 import { LineForm } from './LineForm';
 
 interface GuideSheetFormProps extends FormProps<GuideSheet> {
@@ -11,27 +11,6 @@ interface GuideSheetFormProps extends FormProps<GuideSheet> {
 
 export function GuideSheetForm (props: GuideSheetFormProps){
   let [nwText, setNwText] = useState(props.nw.toString());
-  
-  let htmlStyles = useMemo(() => {
-    let styles = props.node.style;
-    let h = [];
-    for (var i = 0; i < styles.length; i++) {
-      let j = i;
-      h.push(
-        <div key={styles[j].name}>
-        <LineStyleForm node={styles[j]} updateNode={n => {
-          let newArr = [...props.node.style]
-          newArr[j] = n;
-          props.updateNode({
-            ...props.node,
-            style: newArr
-          })
-        }} nw={props.nw}/>
-        </div>
-      );
-    };
-    return h;
-  }, [props]);
 
   return (
   <form className='GuideSheetForm'>
@@ -199,9 +178,6 @@ export function GuideSheetForm (props: GuideSheetFormProps){
         })
       }} nw={props.nw}/>
     </div>
-    <hr />
-    <h3 className="title is-3">Styles</h3>
-    {htmlStyles}
     </form>
   )
 }

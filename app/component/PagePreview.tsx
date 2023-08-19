@@ -4,6 +4,7 @@ import { useRef, useEffect, Ref, useCallback, useMemo } from "react"
 import { GuideSheet, getFormattedGuideSheet } from "../model/guidesheet"
 import { draw } from './drawGuidesheet';
 import { TbBrandGithubFilled, TbHeart } from "react-icons/tb";
+import { Footer } from "./Footer";
 
 export function PagePreview(props: {gs: GuideSheet}) {
   const canvasRef: Ref<HTMLCanvasElement> = useRef(null);
@@ -144,6 +145,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
 
   useEffect(() => {
     if (!canvasRef.current) return;
+
     let cv = canvasRef.current!!;
     let ctx = cv.getContext('2d')!!;
     let pxRatio = window.devicePixelRatio;
@@ -170,7 +172,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
     initTransformRef.current = ctx.getTransform();
     firstRender.current = false;
     draw(gs, cv);
-  }, [canvasRef, pageWidth, pageHeight]);
+  }, [gs, canvasRef, pageWidth, pageHeight]);
 
   useEffect(() => {
     let cv = canvasRef.current!!;
@@ -193,13 +195,11 @@ export function PagePreview(props: {gs: GuideSheet}) {
           onMouseLeave={handleMovementLeave}
           onTouchEnd={handleMovementEnd}
           />
-        <button className="button is-info" onClick={centerView}>Center</button>
       </div>
-      <footer>
-        Created with <TbHeart /> by Guido Ferri. Repo on <a 
-          href="https://github.com/GuidoFe/calligraphy-guideline-generator"
-          target="_blank">GitHub</a>
-      </footer>
+      <div id="canvas-overlay">
+        <button id="center-canvas-button" className="button is-info" onClick={centerView}>Center</button>
+        <Footer />
+      </div>
     </div>
   )
 

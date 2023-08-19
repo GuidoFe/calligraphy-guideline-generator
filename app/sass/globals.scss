@@ -36,10 +36,59 @@ table {
     vertical-align: center;
 }
 
-@media(max-width: 768px) {
+@media(max-width: 1023px) {
+
+    #canvas-overlay > .Footer {
+        display: none;
+    }
+
+    .NavBar {
+        position: sticky;
+        top: 0px;
+        z-index: 2000;
+        background-color: white;
+    }
+    .main-column-group {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    .form-column, .styles-column, .footer-mobile {
+        flex: 1 0 auto;
+    }
+
+    .footer-mobile {
+        order: 5;
+    }
+
+    .preview-column {
+        flex: 1 0 auto;
+        order: 5;
+    }
+
+    .form-column {
+        padding: 20px;
+    }
+
+    .styles-column {
+        padding: 20px;
+    }
+    
+    .preview-container, .PagePreview {
+        width: 90vw;
+        height: 127.29vw;
+    }
 }
 
-@media(min-width: 769px) {
+@media(min-width: 1024px) {
+    .footer-mobile {
+        display: none;
+    }
+
+    #hr-styles {
+        display: none;
+    }
+
     .generator-page {
         position: absolute;
         width: 100vw;
@@ -55,34 +104,62 @@ table {
 
     }
 
-    .form-column, .preview-column {
+    .form-column, .styles-column {
         flex: 1 0 auto;
+    }
+
+    .preview-column {
+        flex: 1 1 auto;
     }
 
     .form-column {
         padding: 20px;
         direction: rtl;
         overflow: auto;
-        min-width: 500px;
 
         > div {
             direction: ltr;
         }
+    }
+
+    .styles-column {
+        padding: 20px;
+        overflow: auto;
+        margin-right: 5px;
     }
     
     .preview-container, .PagePreview {
         width: 100%;
         height: 100%;
     }
-    .preview-container {
-        background-color: #bce4fc;
-    }
+    
+
     
 }
 
-footer a {
-    color: unset;
-    text-decoration-line: underline;
+.PagePreview {
+    position: relative;
+    left: 0%;
+    right: 0%;
+}
+
+.preview-container {
+    background-color: #bce4fc;
+}
+
+footer {
+    a {
+        color: unset;
+        text-decoration-line: underline;
+    }
+
+    p {
+        text-align: center;
+    }
+}
+
+.Footer {
+    padding: 10px;
 }
 
 .nav {
@@ -107,4 +184,24 @@ footer a {
     }
 
 }
+
+#canvas-overlay {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    z-index: 6000;
+    padding: 10px;
+    
+
+    > .Footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+
+}
+
 

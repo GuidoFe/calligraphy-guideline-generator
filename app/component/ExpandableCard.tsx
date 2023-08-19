@@ -6,7 +6,7 @@ import {TbChevronUp, TbChevronDown} from 'react-icons/tb';
 export function ExpandableCard (props: { children: ReactNode | ReactNode[], title: string, startExpanded: boolean}){
   let [isExpanded, setExpanded] = useState(props.startExpanded);
   return (
-    <div className="card is-fullwidth">
+    <div className="card">
       <header className="card-header" onClick={_ =>
           setExpanded(!isExpanded)
         }> 

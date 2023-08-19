@@ -1,12 +1,12 @@
 'use client'
 import {useState} from 'react'
+import { Footer } from './component/Footer';
 import { PagePreview } from '@/app/component/PagePreview';
 import { GuideSheetForm } from './component/FormComponents';
 import '@/app/sass/form.scss'
 import defaultGuideSheet from '@/conf/defaultConfig';
-import { TbBrandGithubFilled } from 'react-icons/tb';
-import Image from 'next/image';
 import NavBar from './component/NavBar';
+import { StylesForm } from './component/FormComponents/StylesForm';
 
 export default function Page() { 
   const [guideSheet, setGuideSheet] = useState(defaultGuideSheet);
@@ -44,6 +44,18 @@ export default function Page() {
           </div>
           <div className="preview-column">
             <PagePreview gs={guideSheet}/>
+          </div>
+          <div className="styles-column">
+            <hr id="hr-styles"/>
+            <StylesForm node={guideSheet.style} nw={guideSheet.nibWidth} updateNode={(a) => {
+              setGuideSheet({
+                ...guideSheet,
+                style: a
+              });
+            }}/>
+          </div>
+          <div className="footer-mobile">
+            <Footer />
           </div>
         </div>
       </div>
