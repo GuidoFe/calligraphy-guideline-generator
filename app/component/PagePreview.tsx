@@ -75,10 +75,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx.scale(scaleAmount, scaleAmount);
     ctx.translate(-zoomPoint.x, -zoomPoint.y);
     draw(gs, canvasRef.current!!);
-    console.log(`Zoom point: ${zoomPoint.x} ${zoomPoint.y}`)
-    console.log(`Pre updating: ${lastPinchCenter.current.x} ${lastPinchCenter.current.y}`)
     lastPinchCenter.current = { x: zoomPoint.x, y: zoomPoint.y};
-    console.log(`After updating: ${lastPinchCenter.current.x} ${lastPinchCenter.current.y}`)
+    console.log(`scaleAmount: ${scaleAmount}`)
     ctx.fillStyle = "red";
     ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
     //ctx.fillRect(zoomPoint.x - 5, zoomPoint.y - 5, 10, 10);
@@ -108,7 +106,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
       _handleZooming(
         (p0.x + p1.x) / 2,
         (p0.y + p1.y) / 2,
-        (hyp - lastPinchDistanceRef.current) / lastPinchDistanceRef.current,
+        hyp > lastPinchDistanceRef.current ? 1.1 : 0.9,
         1
       ); 
       lastPinchDistanceRef.current = hyp
