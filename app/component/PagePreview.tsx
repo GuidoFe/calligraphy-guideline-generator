@@ -110,7 +110,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
   }, [_handleMovement, _handleZooming]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => 
-    _handleMovement(e, e.movementX, e.movementY
+    _handleMovement(e, e.movementX * window.devicePixelRatio, e.movementY * window.devicePixelRatio
     ), [_handleMovement]);
 
   const handleMovementLeave = useCallback(() => {
@@ -123,8 +123,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
     let pxRatio = window.devicePixelRatio;
     let rect = canvasRef.current!!.getBoundingClientRect();
     _handleZooming(
-      e.clientX - rect.left * pxRatio, 
-      e.clientY - rect.top * pxRatio, 
+      (e.clientX - rect.left) * pxRatio, 
+      (e.clientY - rect.top) * pxRatio, 
       e.deltaY > 0 ? 1 - 1/e.deltaY : 1 + 1 / Math.abs(e.deltaY),
       1.1
     );

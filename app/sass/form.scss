@@ -11,12 +11,6 @@ input[type="number"] {
     min-width: 5em;
 }
 
-//.color-field {
-//    width: 50px;
-//    margin: 0px;
-//    padding: 0px;
-//}
-
 .fieldset{
    background-color: #fff;
    border-radius: 6px;
@@ -40,19 +34,9 @@ input[type="number"] {
 	border: 0 none
 }
 
-//input[type="color"] {
-//    width: 3em;
-//}
-
 .stroke-field {
     min-width: 150px;
 }
-
-//.button, .picker, .color-control {
-//    min-width: 0px;
-//    width: 0px;
-//    margin: 0px;
-//}
 
 .LineStyleForm .card-header:hover {
     cursor:pointer;
@@ -66,3 +50,10 @@ td {
     display: block;
     padding: 10px;
 }
+
+.preview-container > button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+

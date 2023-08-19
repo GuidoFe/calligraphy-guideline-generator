@@ -34,11 +34,11 @@ export default function Page() {
             nw={guideSheet.nibWidth} 
             setNw={(n: number) => setGuideSheet({...guideSheet, nibWidth: n})}
           />
-          <button id="generate-button" className="button is-primary is-large" onClick={generate}>
-            Generate
-          </button>
         </div>
       </div>
+      <button id="generate-button" className="button is-primary is-large" onClick={generate}>
+        Generate
+      </button>
       <div className="preview-column column is-three-fifths">
         <PagePreview gs={guideSheet}/>
       </div>
