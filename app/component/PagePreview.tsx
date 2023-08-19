@@ -92,12 +92,12 @@ export function PagePreview(props: {gs: GuideSheet}) {
         x: e.touches[1].clientX - rect.left,
         y: e.touches[1].clientY - rect.top
       }
-      let w = Math.abs(p0.x - p1.x);
-      let h = Math.abs(p0.y - p1.y);
+      let w = p1.x - p0.x;
+      let h = p1.y - p0.y;
       let hyp = Math.hypot(w, h);
       _handleZooming(
-        Math.min(p0.x, p1.x) + w / 2,
-        Math.min(p0.y, p1.y) + h / 2,
+        (p0.x + p1.x) / 2,
+        (p0.y + p1.y) / 2,
         (hyp - lastPinchDistanceRef.current) / lastPinchDistanceRef.current,
         1
       ); 
