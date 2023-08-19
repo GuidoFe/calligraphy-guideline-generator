@@ -3,6 +3,7 @@
 import { useRef, useEffect, Ref, useCallback, useMemo } from "react"
 import { GuideSheet, getFormattedGuideSheet } from "../model/guidesheet"
 import { draw } from './drawGuidesheet';
+import { TbBrandGithubFilled, TbHeart } from "react-icons/tb";
 
 export function PagePreview(props: {gs: GuideSheet}) {
   const canvasRef: Ref<HTMLCanvasElement> = useRef(null);
@@ -74,7 +75,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx.translate(-zoomPoint.x, -zoomPoint.y);
     draw(gs, canvasRef.current!!);
     lastPinchCenter.current = { x: zoomPoint.x, y: zoomPoint.y};
-    console.log(`scaleAmount: ${scaleAmount}`)
   }, [gs, canvasRef]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
@@ -144,7 +144,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    console.log("Resizing");
     let cv = canvasRef.current!!;
     let ctx = cv.getContext('2d')!!;
     let pxRatio = window.devicePixelRatio;
@@ -194,8 +193,13 @@ export function PagePreview(props: {gs: GuideSheet}) {
           onMouseLeave={handleMovementLeave}
           onTouchEnd={handleMovementEnd}
           />
-          <button className="button is-info" onClick={centerView}>Center</button>
+        <button className="button is-info" onClick={centerView}>Center</button>
       </div>
+      <footer>
+        Created with <TbHeart /> by Guido Ferri. Repo on <a 
+          href="https://github.com/GuidoFe/calligraphy-guideline-generator"
+          target="_blank">GitHub</a>
+      </footer>
     </div>
   )
 
