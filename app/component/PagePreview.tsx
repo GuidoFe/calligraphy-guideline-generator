@@ -34,8 +34,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
     let deltaY = movementY / currentScale;
     ctx.translate(deltaX, deltaY);
     draw(gs, canvasRef.current!!);
-    ctx.fillStyle = "red";
-    ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
   }, [gs]);
   
   const handleMovementStart = useCallback((e: React.MouseEvent | TouchEvent) => {
@@ -77,9 +75,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
     draw(gs, canvasRef.current!!);
     lastPinchCenter.current = { x: zoomPoint.x, y: zoomPoint.y};
     console.log(`scaleAmount: ${scaleAmount}`)
-    ctx.fillStyle = "red";
-    ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
-    //ctx.fillRect(zoomPoint.x - 5, zoomPoint.y - 5, 10, 10);
   }, [gs, canvasRef]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
@@ -107,7 +102,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
         (p0.x + p1.x) / 2,
         (p0.y + p1.y) / 2,
         hyp / lastPinchDistanceRef.current,
-        //hyp > lastPinchDistanceRef.current ? 1.1 : 0.9,
         1
       ); 
       lastPinchDistanceRef.current = hyp
@@ -141,8 +135,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx?.setTransform(initTransformRef.current!!);
     clear();
     draw(gs, canvasRef.current!!);
-    ctx!!.fillStyle = "red";
-    ctx!!.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
   }, [gs]);
 
   let pageWidth = gs.pageLayout.width;
@@ -152,8 +144,13 @@ export function PagePreview(props: {gs: GuideSheet}) {
     console.log("Resizing");
     let cv = canvasRef.current!!;
     let ctx = cv.getContext('2d')!!;
-    cv.width = cv.parentElement!!.clientWidth;
-    cv.height = cv.parentElement!!.clientHeight;
+    let pxRatio = window.devicePixelRatio;
+    let w = cv.parentElement!!.clientWidth;
+    let h = cv.parentElement!!.clientHeight;
+    cv.width = w * pxRatio;
+    cv.height = h * pxRatio;
+    cv.style.width = `${w}px`;
+    cv.style.height = `${h}px`;
     if (!firstRender.current) return;
 
     let s = Math.min(cv.clientWidth / pageWidth, cv.clientHeight / pageHeight);
@@ -171,8 +168,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
     initTransformRef.current = ctx.getTransform();
     firstRender.current = false;
     draw(gs, cv);
-    ctx.fillStyle = "red";
-    ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
   }, [canvasRef, pageWidth, pageHeight]);
 
   useEffect(() => {
