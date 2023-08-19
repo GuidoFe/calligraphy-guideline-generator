@@ -154,7 +154,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
     if (!firstRender.current) return;
 
     let s = Math.min(cv.clientWidth / pageWidth, cv.clientHeight / pageHeight);
-    let initialScale = s - s * 0.05; // * dpi;
+    let initialScale = s * pxRatio * 0.9; 
     ctx.scale(initialScale, initialScale);
     let center = ctx.getTransform().inverse().transformPoint({
       x: cv.width / 2, 
