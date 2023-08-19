@@ -106,7 +106,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
       _handleZooming(
         (p0.x + p1.x) / 2,
         (p0.y + p1.y) / 2,
-        hyp > lastPinchDistanceRef.current ? 1.1 : 0.9,
+        hyp / lastPinchDistanceRef.current,
+        //hyp > lastPinchDistanceRef.current ? 1.1 : 0.9,
         1
       ); 
       lastPinchDistanceRef.current = hyp
