@@ -74,10 +74,14 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx.translate(zoomPoint.x, zoomPoint.y);
     ctx.scale(scaleAmount, scaleAmount);
     ctx.translate(-zoomPoint.x, -zoomPoint.y);
-    lastPinchCenter.current = { ...zoomPoint};
     draw(gs, canvasRef.current!!);
+    console.log(`Zoom point: ${zoomPoint.x} ${zoomPoint.y}`)
+    console.log(`Pre updating: ${lastPinchCenter.current.x} ${lastPinchCenter.current.y}`)
+    lastPinchCenter.current = { x: zoomPoint.x, y: zoomPoint.y};
+    console.log(`After updating: ${lastPinchCenter.current.x} ${lastPinchCenter.current.y}`)
     ctx.fillStyle = "red";
     ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
+    //ctx.fillRect(zoomPoint.x - 5, zoomPoint.y - 5, 10, 10);
   }, [gs, canvasRef]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
@@ -139,6 +143,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx?.setTransform(initTransformRef.current!!);
     clear();
     draw(gs, canvasRef.current!!);
+    ctx!!.fillStyle = "red";
+    ctx!!.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
   }, [gs]);
 
   let pageWidth = gs.pageLayout.width;
@@ -166,6 +172,9 @@ export function PagePreview(props: {gs: GuideSheet}) {
     );
     initTransformRef.current = ctx.getTransform();
     firstRender.current = false;
+    draw(gs, cv);
+    ctx.fillStyle = "red";
+    ctx.fillRect(lastPinchCenter.current.x - 5, lastPinchCenter.current.y - 5, 10, 10);
   }, [canvasRef, pageWidth, pageHeight]);
 
   useEffect(() => {
