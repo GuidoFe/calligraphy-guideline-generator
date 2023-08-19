@@ -1,8 +1,12 @@
 'use client'
 import '@/app/sass/form.scss'
+import classNames from 'classnames';
 import Image from 'next/image';
 
-export default function NavBar(props: {generate: () => void}) { 
+export default function NavBar(props: {
+  generate: () => void,
+  isLoading: boolean
+}) { 
 
   return (
   <div className="nav NavBar">
@@ -12,7 +16,11 @@ export default function NavBar(props: {generate: () => void}) {
       </div>
     </div>
     <span className="title">Guidesheet Generator</span>
-    <button id="generate-button" className="button is-primary is-large" onClick={props.generate}>
+    <button 
+      id="generate-button" 
+      className={classNames('button', 'is-primary', 'is-large', {'is-loading': props.isLoading})} 
+      onClick={props.generate}
+    >
       Generate
     </button>
   </div>

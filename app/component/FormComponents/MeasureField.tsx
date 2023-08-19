@@ -34,7 +34,7 @@ export function MeasureField (props: FieldFormProps<Measure>) {
         <label className="label">{props.label}</label>
       }
       <div className="control">
-        <div className="field has-addons">
+        <div className="field has-addons is-narrow">
           <div className={classNames("control", {"is-expanded": props.isExpanded ?? false})}>
             <input className="input" type="number" value={value} onChange={onChangeValue}/>
           </div>

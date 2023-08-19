@@ -3,7 +3,6 @@
 import { useRef, useEffect, Ref, useCallback, useMemo } from "react"
 import { GuideSheet, getFormattedGuideSheet } from "../model/guidesheet"
 import { draw } from './drawGuidesheet';
-import { TbBrandGithubFilled, TbHeart } from "react-icons/tb";
 import { Footer } from "./Footer";
 
 export function PagePreview(props: {gs: GuideSheet}) {
@@ -13,16 +12,26 @@ export function PagePreview(props: {gs: GuideSheet}) {
   const isMovementStarted = useRef(false);
   const lastTouch = useRef({x: 0, y: 0});
   const lastPinchCenter = useRef({x: 0, y: 0});
-  const firstRender = useRef(true);
+  const lastWheelListener = useRef<((w: WheelEvent) => void) | null>(null);
+  const lastTouchStartListener = useRef<((t: TouchEvent) => void) | null>(null);
+  const lastTouchMoveListener = useRef<((t: TouchEvent) => void) | null>(null);
+  const isInit = useRef(false);
   let gs = useMemo(() => getFormattedGuideSheet(props.gs), [props.gs]);
-  
-  const clear = () => {
+ 
+
+
+  const drawCallback = useCallback(() => {
+    if (canvasRef.current)
+      draw(gs, canvasRef.current!!)
+    }, [gs, canvasRef]);
+
+  const clear = useCallback(() => {
     let ctx = canvasRef.current!!.getContext('2d')!!;
     let inverse = ctx.getTransform().inverse();
     let start = inverse.transformPoint({x: 0, y: 0});
     let end = inverse.transformPoint({x: canvasRef.current!!.width, y: canvasRef.current!!.height})
     ctx.clearRect(start.x, start.y, end.x - start.x, end.y - start.y);
-  }
+  }, [canvasRef]);
 
   const _handleMovement = useCallback((e: React.UIEvent | UIEvent, movementX: number, movementY: number) => {
     if (!isMovementStarted.current)
@@ -35,8 +44,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
     let deltaX = movementX / currentScale;
     let deltaY = movementY / currentScale;
     ctx.translate(deltaX, deltaY);
-    draw(gs, canvasRef.current!!);
-  }, [gs]);
+    drawCallback();
+  }, [clear, drawCallback, canvasRef]);
   
   const handleMovementStart = useCallback((e: React.MouseEvent | TouchEvent) => {
     e.stopPropagation();
@@ -74,9 +83,9 @@ export function PagePreview(props: {gs: GuideSheet}) {
     ctx.translate(zoomPoint.x, zoomPoint.y);
     ctx.scale(scaleAmount, scaleAmount);
     ctx.translate(-zoomPoint.x, -zoomPoint.y);
-    draw(gs, canvasRef.current!!);
+    drawCallback();
     lastPinchCenter.current = { x: zoomPoint.x, y: zoomPoint.y};
-  }, [gs, canvasRef]);
+  }, [clear, canvasRef, drawCallback]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
     if (e.touches.length == 0 || e.changedTouches.item(0) == null) return;
@@ -108,7 +117,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
       ); 
       lastPinchDistanceRef.current = hyp
     }
-  }, [_handleMovement, _handleZooming]);
+  }, [_handleMovement, _handleZooming, canvasRef]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => 
     _handleMovement(e, e.movementX * window.devicePixelRatio, e.movementY * window.devicePixelRatio
@@ -132,18 +141,19 @@ export function PagePreview(props: {gs: GuideSheet}) {
   }, [_handleZooming, canvasRef])
 
   const centerView = useCallback(() => {
+    console.log("centering view");
     let ctx = canvasRef.current?.getContext('2d');
     if (initTransformRef.current == null)
       return;
     ctx?.setTransform(initTransformRef.current!!);
     clear();
-    draw(gs, canvasRef.current!!);
-  }, [gs]);
+    drawCallback();
+  }, [clear, drawCallback, initTransformRef]);
 
   let pageWidth = gs.pageLayout.width;
   let pageHeight = gs.pageLayout.height;
 
-  useEffect(() => {
+  let resetSize = useCallback(() => {
     if (!canvasRef.current) return;
 
     let cv = canvasRef.current!!;
@@ -155,7 +165,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
     cv.height = h * pxRatio;
     cv.style.width = `${w}px`;
     cv.style.height = `${h}px`;
-    if (!firstRender.current) return;
 
     let s = Math.min(cv.clientWidth / pageWidth, cv.clientHeight / pageHeight);
     let initialScale = s * pxRatio * 0.9; 
@@ -170,20 +179,43 @@ export function PagePreview(props: {gs: GuideSheet}) {
       center.y - pageCenter.y
     );
     initTransformRef.current = ctx.getTransform();
-    firstRender.current = false;
-    draw(gs, cv);
-  }, [gs, canvasRef, pageWidth, pageHeight]);
+    drawCallback();
+  }, [drawCallback, canvasRef, pageWidth, pageHeight]);
+
+  const addResizeListener = useCallback(() => {
+    window.addEventListener("resize", (_) => {
+      resetSize();
+    })     
+  }, [])
+
+  useEffect(() => {
+    resetSize();
+    addResizeListener();
+  }, [])
 
   useEffect(() => {
     let cv = canvasRef.current!!;
+
+    if (lastWheelListener.current != null)
+      cv.removeEventListener('wheel', lastWheelListener.current!!);
     cv.addEventListener('wheel', handleScrolling, {passive: false});
+    lastWheelListener.current = handleScrolling;
+
+    if (lastTouchStartListener != null)
+      cv.removeEventListener('touchstart', lastTouchStartListener.current!!);
     cv.addEventListener('touchstart', handleTouchStart, {passive: false});
+    lastTouchStartListener.current = handleTouchStart;
+
+    if (lastTouchMoveListener != null)
+      cv.removeEventListener('touchmove', lastTouchMoveListener.current!!);
     cv.addEventListener('touchmove', handleTouchMove, {passive: false})
-  }, [gs, handleScrolling, handleTouchStart, handleTouchMove]);
+    lastTouchMoveListener.current = handleTouchMove;
+
+  }, [canvasRef]);
 
   useEffect(() => {
-    draw(gs, canvasRef.current!!);
-  }, [gs]);
+    drawCallback();
+  }, [drawCallback]);
 
   return (
     <div className="PagePreview">

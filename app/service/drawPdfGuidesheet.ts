@@ -17,9 +17,19 @@ function getStyleForLine(ls: FormattedLineStyle): {
         lineCap: LineCapStyle,
         thickness: number
 } {
+    let dashArray: undefined | number[] = undefined;
+    switch(ls.stroke) {
+        case Stroke.Dash:
+            dashArray = [ls.dashLength ?? 3, ls.gap ?? 3];
+            break;
+        case Stroke.Dotted:
+            dashArray = [0, ls.gap ?? 3];
+            break;
+    }
+
     return {
         color: getColor(ls.color) ?? rgb(0, 0, 0),
-        dashArray: ls.stroke == Stroke.Dash ? [ls.dashLength ?? 3, ls.gap ?? 3] : undefined,
+        dashArray: dashArray,
         lineCap: ls.stroke == Stroke.Dotted ? LineCapStyle.Round : LineCapStyle.Butt,
         thickness: ls.width
     }

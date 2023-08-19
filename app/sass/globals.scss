@@ -101,22 +101,24 @@ table {
         flex-flow: row nowrap;
         height: calc(100vh - $nav-height);
         overflow: hidden;
+        min-width: 0;
 
     }
 
     .form-column, .styles-column {
-        flex: 1 0 auto;
+        flex: 2 0 auto;
     }
 
     .preview-column {
         flex: 1 1 auto;
+        min-width: 0;
     }
 
     .form-column {
         padding: 20px;
         direction: rtl;
         overflow: auto;
-
+        min-width: 350px;
         > div {
             direction: ltr;
         }
@@ -126,13 +128,15 @@ table {
         padding: 20px;
         overflow: auto;
         margin-right: 5px;
+        width: 350px;
+        min-width: 350px;
     }
     
     .preview-container, .PagePreview {
         width: 100%;
         height: 100%;
     }
-    
+
 
     
 }
@@ -196,10 +200,10 @@ footer {
 
     > .Footer {
         position: absolute;
-        left: 0;
-        right: 0;
         top: 50%;
-        transform: translate(0, -50%);
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
     }
 
 }

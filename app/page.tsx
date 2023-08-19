@@ -10,8 +10,10 @@ import { StylesForm } from './component/FormComponents/StylesForm';
 
 export default function Page() { 
   const [guideSheet, setGuideSheet] = useState(defaultGuideSheet);
+  const [isLoading, setIsLoading] = useState(false);
   const generate = () => {
     if (window === undefined) return;
+    setIsLoading(true);
     fetch("/api/guidesheet", {
       method: "POST", 
       body: JSON.stringify(guideSheet),
@@ -21,6 +23,7 @@ export default function Page() {
       ])
     }).then(res => res.blob()).then(blob => {
       let file = URL.createObjectURL(blob);
+      setIsLoading(false);
       window.open(file, "_blank");
     });
   }
@@ -30,7 +33,7 @@ export default function Page() {
   <main>
     <div className="generator-page">
       <div className="">
-        <NavBar generate={generate} />
+        <NavBar generate={generate} isLoading={isLoading} />
         <div className="main-column-group">
           <div className="form-column">
             <div>
