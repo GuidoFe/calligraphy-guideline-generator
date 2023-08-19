@@ -211,7 +211,7 @@ export function PagePreview(props: {gs: GuideSheet}) {
     cv.addEventListener('touchmove', handleTouchMove, {passive: false})
     lastTouchMoveListener.current = handleTouchMove;
 
-  }, [canvasRef]);
+  }, [canvasRef, handleScrolling, handleTouchStart, handleTouchMove]);
 
   useEffect(() => {
     drawCallback();
