@@ -79,11 +79,12 @@ export function PagePreview(props: {gs: GuideSheet}) {
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
     if (e.touches.length == 0 || e.changedTouches.item(0) == null) return;
+    let pxRatio = window.devicePixelRatio;
     if (e.touches.length == 1) {
       let touch = e.touches.item(0)!!;
-      let movementX = lastTouch.current.x - touch.clientX;
-      let movementY = lastTouch.current.y - touch.clientY;
-      lastTouch.current = {x: touch.clientX, y: touch.clientY}
+      let movementX = lastTouch.current.x - touch.clientX * pxRatio;
+      let movementY = lastTouch.current.y - touch.clientY * pxRatio;
+      lastTouch.current = {x: touch.clientX * pxRatio, y: touch.clientY * pxRatio}
       _handleMovement(e, -movementX, -movementY);
     } else if (e.touches.length == 2){
       let rect = canvasRef.current!!.getBoundingClientRect();
@@ -99,8 +100,8 @@ export function PagePreview(props: {gs: GuideSheet}) {
       let h = p1.y - p0.y;
       let hyp = Math.hypot(w, h);
       _handleZooming(
-        (p0.x + p1.x) / 2,
-        (p0.y + p1.y) / 2,
+        (p0.x + p1.x) / 2 * pxRatio,
+        (p0.y + p1.y) / 2 * pxRatio,
         hyp / lastPinchDistanceRef.current,
         1
       ); 
@@ -119,10 +120,11 @@ export function PagePreview(props: {gs: GuideSheet}) {
   const handleScrolling = useCallback((e: WheelEvent) => {
     e.stopPropagation();
     e.preventDefault();
+    let pxRatio = window.devicePixelRatio;
     let rect = canvasRef.current!!.getBoundingClientRect();
     _handleZooming(
-      e.clientX - rect.left, 
-      e.clientY - rect.top, 
+      e.clientX - rect.left * pxRatio, 
+      e.clientY - rect.top * pxRatio, 
       e.deltaY > 0 ? 1 - 1/e.deltaY : 1 + 1 / Math.abs(e.deltaY),
       1.1
     );
