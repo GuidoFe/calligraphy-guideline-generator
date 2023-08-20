@@ -93,8 +93,8 @@ function drawRow(
     // Parallel lines
     for (var line of gs.row.lines) {
         ctx.drawLine({
-            start: {x: x, y: y + baseLineOffset + line.offset},
-            end: {x: x + width, y: y + baseLineOffset + line.offset},
+            start: {x: x, y: y + baseLineOffset - line.offset},
+            end: {x: x + width, y: y + baseLineOffset - line.offset},
             ...getStyleForLine(gs.style[line.style])
         });
     }
@@ -135,7 +135,7 @@ function drawRows(ctx: PDFPage, gs: FormattedGuideSheet) {
         }
     }
     let height = maxOffset - minOffset;
-    let baseLineOffset = -minOffset;
+    let baseLineOffset = maxOffset;
     let width = gs.pageLayout.width - gs.pageLayout.margin.right - gs.pageLayout.margin.left
     let x = gs.pageLayout.margin.left
     let y = gs.pageLayout.height - gs.pageLayout.margin.top - height;
