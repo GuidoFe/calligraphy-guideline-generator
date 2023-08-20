@@ -15,7 +15,6 @@ export function PagePreview(props: {gs: GuideSheet}) {
   const lastWheelListener = useRef<((w: WheelEvent) => void) | null>(null);
   const lastTouchStartListener = useRef<((t: TouchEvent) => void) | null>(null);
   const lastTouchMoveListener = useRef<((t: TouchEvent) => void) | null>(null);
-  const isInit = useRef(false);
   let gs = useMemo(() => getFormattedGuideSheet(props.gs), [props.gs]);
  
 
@@ -214,8 +213,9 @@ export function PagePreview(props: {gs: GuideSheet}) {
   }, [canvasRef, handleScrolling, handleTouchStart, handleTouchMove]);
 
   useEffect(() => {
+    clear();
     drawCallback();
-  }, [drawCallback]);
+  }, [drawCallback, clear]);
 
   return (
     <div className="PagePreview">

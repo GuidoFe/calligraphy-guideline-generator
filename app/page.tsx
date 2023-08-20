@@ -1,5 +1,5 @@
 'use client'
-import {useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import { Footer } from './component/Footer';
 import { PagePreview } from '@/app/component/PagePreview';
 import { GuideSheetForm } from './component/FormComponents';
@@ -7,11 +7,12 @@ import '@/app/sass/form.scss'
 import defaultGuideSheet from '@/conf/defaultConfig';
 import NavBar from './component/NavBar';
 import { StylesForm } from './component/FormComponents/StylesForm';
+import { GuideSheet } from './model/guidesheet';
 
 export default function Page() { 
   const [guideSheet, setGuideSheet] = useState(defaultGuideSheet);
   const [isLoading, setIsLoading] = useState(false);
-  const generate = () => {
+  const generate = useCallback(() => {
     if (window === undefined) return;
     setIsLoading(true);
     fetch("/api/guidesheet", {
@@ -26,7 +27,8 @@ export default function Page() {
       setIsLoading(false);
       window.open(file, "_blank");
     });
-  }
+  }, [guideSheet]);
+
 
   return (
   <div>
