@@ -1,5 +1,7 @@
 export enum Unit {
     mm = "mm",
     cm = "cm",
-    nw = "nw"
+    in = "in",
+    pt = "pt",
+    nw = "nw",
 }
