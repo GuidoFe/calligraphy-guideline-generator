@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 export default function NavBar(props: {
   generate: () => void,
+  reset: () => void,
   isLoading: boolean
 }) { 
 
@@ -15,10 +16,18 @@ export default function NavBar(props: {
         <Image src="/favicon.svg" alt="logo" width={30} height={30}/>
       </div>
     </div>
-    <span className="title">Guidesheet Generator</span>
+    <span className="title is-size-2-desktop is-size-3-touch">Guidesheet Generator</span>
+    <button 
+      id="reset-button" 
+      className={classNames('button', 'is-danger', 'is-outlined', 'is-large', 'is-responsive')} 
+      onClick={props.reset}
+      type="button"
+    >
+      Reset
+    </button>
     <button 
       id="generate-button" 
-      className={classNames('button', 'is-primary', 'is-large', {'is-loading': props.isLoading})} 
+      className={classNames('button', 'is-primary', 'is-large', 'is-responsive', {'is-loading': props.isLoading})} 
       onClick={props.generate}
     >
       Generate

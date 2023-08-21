@@ -14,7 +14,7 @@ export function GuideSheetForm (props: GuideSheetFormProps){
 
   return (
   <form className='GuideSheetForm'>
-    <h3 className="title is-3">Page</h3>
+    <h3 className="title is-size-3-desktop is-size-4-touch">Page</h3>
     <PageForm node={props.node.pageLayout} updateNode={n => {
       props.updateNode({
         ...props.node,
@@ -58,7 +58,7 @@ export function GuideSheetForm (props: GuideSheetFormProps){
     </div>
     <hr />
     <div>
-      <h3 className="title is-3">Decorations</h3>
+      <h3 className="title is-size-3-desktop is-size-4-touch">Decorations</h3>
       <label className="checkbox label my-2"> 
         <input type="checkbox" className="mr-2" value="showtitle" checked={props.node.showTitle} onChange={_ =>{
           props.updateNode({
@@ -104,7 +104,7 @@ export function GuideSheetForm (props: GuideSheetFormProps){
     </div>
     <hr />
     <div>
-      <h3 className="title is-3">Lines</h3>
+      <h3 className="title is-size-3-desktop is-size-4-touch">Lines</h3>
       <LineForm isActivable={props.node.row.ascender.isOptional} node={props.node.row.ascender} updateNode={n => {
         props.updateNode({
           ...props.node,

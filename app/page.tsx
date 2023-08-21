@@ -52,11 +52,14 @@ export default function Page() {
   <main>
     <div className="generator-page">
       <div className="">
-        <NavBar generate={() => {
-          if (!guideSheet) return;
-          setIsLoading(true);
-          generate(guideSheet, () => {setIsLoading(false)});
-        }} isLoading={isLoading} />
+        <NavBar 
+          generate={() => {
+            if (!guideSheet) return;
+            setIsLoading(true);
+            generate(guideSheet, () => {setIsLoading(false)});
+          }} 
+          reset={() => setGuideSheet(defaultGuideSheet)}
+          isLoading={isLoading} />
         {guideSheet != null &&
         <div className="main-column-group">
           <div className="form-column">
