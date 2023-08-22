@@ -8,6 +8,7 @@ import defaultGuideSheet from '@/conf/defaultConfig';
 import NavBar from './component/NavBar';
 import { StylesForm } from './component/FormComponents/StylesForm';
 import { GuideSheet } from './model/guidesheet';
+import { HeadProvider } from 'react-head';
 
 function generate(gs: GuideSheet, onEndCallback: () => void) {
     if (window === undefined) return;
@@ -49,6 +50,10 @@ export default function Page() {
 
   return (
   <div>
+  <HeadProvider headTags={[
+    <script async key={0} src="https://analytics.umami.is/script.js" data-website-id="1d8fb17f-45a0-4cde-807b-e1dc74657846"></script>
+  ]}>
+  </HeadProvider>
   <main>
     <div className="generator-page">
       <div className="">
