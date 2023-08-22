@@ -1,14 +1,17 @@
 'use client'
 import React from 'react'
 import { ParallelLine } from '@/app/model/guidesheet';
-import { FormProps } from '@/types'
 import { MeasureField } from '.';
+import { FormProps } from '@/types';
 
 export function ParallelLineFormPart (props: FormProps<ParallelLine>){
   return (
   <div>
     <MeasureField 
-      label={`Distance from ${props.node.isOffsetFromBaseline ? 'baseline' : 'waistline'}`}
+      label={
+        props.node.customOffsetName ?
+          props.node.customOffsetName
+          : `Distance from ${props.node.isOffsetFromBaseline ? 'baseline' : 'waistline'}`}
       node={props.node.offset} 
       updateNode={o => {
         props.updateNode({

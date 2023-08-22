@@ -11,6 +11,7 @@ export interface Line {
 export interface ParallelLine extends Line {
     isOffsetFromBaseline: boolean
     offset: Measure,
+    customOffsetName?: string
 }
 
 export interface DiagonalLine extends Line {
