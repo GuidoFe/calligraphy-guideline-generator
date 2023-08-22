@@ -90,7 +90,8 @@ let defaultGuideSheet: GuideSheet = {
             style: "Medium Line",
             isOffsetFromBaseline: true,
             offset: {value: 5, unit: Unit.nw, allowPW: true},
-            possibleStyles: styleNames
+            possibleStyles: styleNames,
+            customOffsetName: "X-height"
         },
         baseline: {
             name: "Baseline",

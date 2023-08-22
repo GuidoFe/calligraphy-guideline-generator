@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Suspense } from 'react'
 import Loading from './loading'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Script async strategy="beforeInteractive" src="https://analytics.umami.is/script.js" data-website-id="1d8fb17f-45a0-4cde-807b-e1dc74657846"></Script>
       <body className={inter.className}>
         <Suspense fallback={<Loading />}>
           {children}
