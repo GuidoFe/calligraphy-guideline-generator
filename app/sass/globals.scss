@@ -168,7 +168,7 @@ footer {
 }
 
 .Footer {
-    padding: 10px;
+    padding: 0px;
 }
 
 .nav {
@@ -205,7 +205,7 @@ footer {
 
     > .Footer {
         position: absolute;
-        top: 50%;
+        bottom: 0%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1;

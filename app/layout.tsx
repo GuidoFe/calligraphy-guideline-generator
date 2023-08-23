@@ -7,8 +7,9 @@ import Loading from './loading'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Guidesheet Generator',
-  description: 'Generator for calligraphy guides',
+  title: 'Guide Sheet Generator',
+  description: 'Online generator for calligraphy guide sheet',
+  keywords: ['calligraphy', 'guidesheet', 'guide', 'sheet', 'pdf', 'online'],
   icons: [
     {rel: 'icon', url: '/favicon.svg'}
   ]
