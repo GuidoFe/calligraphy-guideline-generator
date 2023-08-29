@@ -25,9 +25,9 @@ function drawNibLadder(
     ctx.fillStyle = "black";
     ctx.beginPath();
     let nibsOverBaseline = Math.ceil(baseLineOffset / nw);
-    let totalNibs = Math.ceil(h / nw);
+    let totalNibs = nibsOverBaseline + Math.ceil((h - baseLineOffset) / nw);
     // -1 left, 1 right
-    let side = nibsOverBaseline % 2 == 0 ? 1 : -1;
+    let side = nibsOverBaseline % 2 == 0 ? -1 : 1;
     ctx.translate(x + nw, y + baseLineOffset - nw * nibsOverBaseline);
     for (let i = 0; i < totalNibs; i++) {
         ctx.rect(0, i * nw, nw * side, nw);
