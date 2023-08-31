@@ -1,5 +1,5 @@
 import { rgb,PDFPage, Color, LineCapStyle, pushGraphicsState, rectangle, clipEvenOdd, endPath, popGraphicsState, PDFOperator, PDFFont } from "pdf-lib";
-import { FormattedGuideSheet, FormattedLine, FormattedLineStyle } from "../model/guidesheet"
+import { FormattedDiagonalLine, FormattedGuideSheet, FormattedLine, FormattedLineStyle } from "../model/guidesheet"
 import { Stroke } from "@/types";
 import { hexToRgb} from "@/utils/ColorUtil"
 import { RelativePoint } from "@/utils/RelativePoint";
@@ -118,6 +118,33 @@ function drawRow(
 
 }
 
+function drawDiagonal(ctx: PDFPage, gs: FormattedGuideSheet, diagonal: FormattedDiagonalLine) {
+    let gap = diagonal.gap;
+    let angleRad = diagonal.angle * Math.PI / 180
+    let sin = Math.sin(angleRad);
+    let cos = Math.cos(angleRad);
+    let w = Math.abs(gs.pageLayout.height * cos / sin);
+    let margins = gs.pageLayout.margin;
+    let xLow = cos > 0 ? margins. left - w : margins.left;
+    let xHigh = cos > 0 ? margins.left : margins.left - w;
+    let diagonalStyle = getStyleForLine(gs.style[diagonal.style]);
+    while(xLow < gs.pageLayout.width - margins.right + gap) {
+        ctx.drawLine({
+            start: {
+                x: xLow,
+                y: margins.bottom
+            },
+            end: {
+                x: xHigh,
+                y: gs.pageLayout.height - margins.top
+            },
+            ...diagonalStyle
+        })
+        xLow += gap;
+        xHigh += gap;
+    }
+}
+
 function drawRows(ctx: PDFPage, gs: FormattedGuideSheet) {
     let minOffset = Number.MAX_VALUE;
     let maxOffset = Number.MIN_VALUE;
@@ -146,40 +173,19 @@ function drawRows(ctx: PDFPage, gs: FormattedGuideSheet) {
     }
 
     // Diagonals
-    if (gs.row.diagonals.isActive) {
+    ctx.pushOperators(
+        pushGraphicsState(),
+        ...clips,
+        clipEvenOdd(),
+        endPath()
+    );
 
-        let gap = gs.row.diagonals.gap;
-        let angleRad = gs.row.diagonals.angle * Math.PI / 180
-        let sin = Math.sin(angleRad);
-        let cos = Math.cos(angleRad);
-        let w = Math.abs(gs.pageLayout.height * cos / sin);
-        let margins = gs.pageLayout.margin;
-        let xLow = cos > 0 ? margins. left - w : margins.left;
-        let xHigh = cos > 0 ? margins.left : margins.left - w;
-        let diagonalStyle = getStyleForLine(gs.style[gs.row.diagonals.style]);
-        ctx.pushOperators(
-            pushGraphicsState(),
-            ...clips,
-            clipEvenOdd(),
-            endPath()
-        )
-        while(xLow < gs.pageLayout.width - margins.right + gap) {
-            ctx.drawLine({
-                start: {
-                    x: xLow,
-                    y: margins.bottom
-                },
-                end: {
-                    x: xHigh,
-                    y: gs.pageLayout.height - margins.top
-                },
-                ...diagonalStyle
-            })
-            xLow += gap;
-            xHigh += gap;
-        }
-        ctx.pushOperators(popGraphicsState());
-    }
+    if (gs.row.diagonal1.isActive)
+        drawDiagonal(ctx, gs, gs.row.diagonal1);
+    if (gs.row.diagonal2.isActive)
+        drawDiagonal(ctx, gs, gs.row.diagonal2);
+    
+    ctx.pushOperators(popGraphicsState());
 }
 
 function drawTitleAndDate(ctx: PDFPage, gs: FormattedGuideSheet, font: PDFFont) {

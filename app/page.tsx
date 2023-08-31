@@ -9,6 +9,8 @@ import NavBar from './component/NavBar';
 import { StylesForm } from './component/FormComponents/StylesForm';
 import { GuideSheet } from './model/guidesheet';
 
+const CURRENT_VERSION = 1;
+
 function generate(gs: GuideSheet, onEndCallback: () => void) {
     if (window === undefined) return;
     fetch("/api/guidesheet", {
@@ -30,6 +32,13 @@ export default function Page() {
 
   useEffect(() => {
     if (guideSheet == null) {
+      let version = window.localStorage.getItem('version');
+      if (version == null || isNaN(parseInt(version)) || parseInt(version) < CURRENT_VERSION ) {
+        window.localStorage.removeItem('gs');
+        setGuideSheet(defaultGuideSheet)
+        window.localStorage.setItem('version', CURRENT_VERSION.toString());
+        return;
+      }
       let savedGuidesheet = window.localStorage.getItem('gs');
       if (savedGuidesheet == null) {
         setGuideSheet(defaultGuideSheet);

@@ -159,12 +159,21 @@ export function GuideSheetForm (props: GuideSheetFormProps){
           }
         })
       }} nw={props.nw}/>
-      <LineForm isActivable={props.node.row.diagonals.isOptional} node={props.node.row.diagonals} updateNode={n => {
+      <LineForm isActivable={props.node.row.diagonal1.isOptional} node={props.node.row.diagonal1} updateNode={n => {
         props.updateNode({
           ...props.node,
           row: {
             ...props.node.row,
-            diagonals: n as DiagonalLine
+            diagonal1: n as DiagonalLine
+          }
+        })
+      }} nw={props.nw}/>
+      <LineForm isActivable={props.node.row.diagonal2.isOptional} node={props.node.row.diagonal2} updateNode={n => {
+        props.updateNode({
+          ...props.node,
+          row: {
+            ...props.node.row,
+            diagonal2: n as DiagonalLine
           }
         })
       }} nw={props.nw}/>

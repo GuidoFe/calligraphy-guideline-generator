@@ -118,12 +118,21 @@ let defaultGuideSheet: GuideSheet = {
             offset: {value: 2, unit: Unit.nw, allowPW: true},
             possibleStyles: styleNames
         },
-        diagonals: {
-            name: "Diagonals",
+        diagonal1: {
+            name: "Diagonal #1",
             isOptional: true,
             isActive: true,
             style: "Thin Line",
             angle: 45,
+            gap: { value: 3, unit: Unit.cm, allowPW: true},
+            possibleStyles: styleNames
+        },
+        diagonal2: {
+            name: "Diagonal #2",
+            isOptional: true,
+            isActive: false,
+            style: "Thin Line",
+            angle: 90,
             gap: { value: 3, unit: Unit.cm, allowPW: true},
             possibleStyles: styleNames
         },

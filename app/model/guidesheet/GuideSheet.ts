@@ -17,7 +17,8 @@ export interface GuideSheet {
         baseline: Line,
         secondaryDescender: ParallelLine,
         descender: ParallelLine,
-        diagonals: DiagonalLine,
+        diagonal1: DiagonalLine,
+        diagonal2: DiagonalLine,
         lineEnds: Line
     }
     style: Array<LineStyle>,
@@ -37,7 +38,8 @@ export interface FormattedGuideSheet {
     row: {
         lines: FormattedParallelLine[],
         baseline: FormattedLine,
-        diagonals: FormattedDiagonalLine,
+        diagonal1: FormattedDiagonalLine,
+        diagonal2: FormattedDiagonalLine,
         lineEnds: FormattedLine
     }
     style: {[name: string]: FormattedLineStyle},
@@ -74,7 +76,8 @@ export function getFormattedGuideSheet(gs: GuideSheet): FormattedGuideSheet {
                 .filter(l => l.isActive)
                 .map(l => getFormattedLine(l, nw, xHeight) as FormattedParallelLine),
             baseline: getFormattedLine(gs.row.baseline, nw, xHeight),
-            diagonals: getFormattedLine(gs.row.diagonals, nw, xHeight) as FormattedDiagonalLine,
+            diagonal1: getFormattedLine(gs.row.diagonal1, nw, xHeight) as FormattedDiagonalLine,
+            diagonal2: getFormattedLine(gs.row.diagonal2, nw, xHeight) as FormattedDiagonalLine,
             lineEnds: getFormattedLine(gs.row.lineEnds, nw, xHeight)
         },
         style: styles,

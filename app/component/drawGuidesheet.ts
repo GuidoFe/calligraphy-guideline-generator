@@ -1,4 +1,4 @@
-import { FormattedGuideSheet, FormattedLine, FormattedLineStyle } from "../model/guidesheet"
+import { FormattedDiagonalLine, FormattedGuideSheet, FormattedLine, FormattedLineStyle } from "../model/guidesheet"
 import { Stroke } from "@/types";
 
 function setStyleForLine(ls: FormattedLineStyle, ctx: CanvasRenderingContext2D) {
@@ -94,6 +94,30 @@ function drawRow(
 
 }
 
+function drawDiagonal(ctx: CanvasRenderingContext2D, gs: FormattedGuideSheet, diagonal: FormattedDiagonalLine, clipPath: Path2D) {
+    ctx.save();
+    ctx.beginPath();
+    setStyleForLine(gs.style[diagonal.style], ctx);
+    let gap = diagonal.gap;
+    let angleRad = diagonal.angle * Math.PI / 180
+    let sin = Math.sin(angleRad);
+    let cos = Math.cos(angleRad);
+    let w = Math.abs(gs.pageLayout.height * cos / sin);
+    let margins = gs.pageLayout.margin;
+    let xLow = cos > 0 ? margins. left - w : margins.left;
+    let xHigh = cos > 0 ? margins.left : margins.left - w;
+    while(xLow < gs.pageLayout.width - margins.right + gap) {
+        ctx.moveTo(xLow, gs.pageLayout.height - margins.bottom);
+        ctx.lineTo(xHigh, margins.top);
+        xLow += gap;
+        xHigh += gap;
+    }
+    ctx.clip(clipPath);
+    ctx.stroke();
+    ctx.restore();
+
+}
+
 function drawRows(ctx: CanvasRenderingContext2D, gs: FormattedGuideSheet) {
     ctx.save();
     let minOffset = Number.MAX_VALUE;
@@ -129,26 +153,11 @@ function drawRows(ctx: CanvasRenderingContext2D, gs: FormattedGuideSheet) {
     }
 
     // Diagonals
-    if (gs.row.diagonals.isActive) {
-        ctx.beginPath();
-        setStyleForLine(gs.style[gs.row.diagonals.style], ctx);
-        let gap = gs.row.diagonals.gap;
-        let angleRad = gs.row.diagonals.angle * Math.PI / 180
-        let sin = Math.sin(angleRad);
-        let cos = Math.cos(angleRad);
-        let w = Math.abs(gs.pageLayout.height * cos / sin);
-        let margins = gs.pageLayout.margin;
-        let xLow = cos > 0 ? margins. left - w : margins.left;
-        let xHigh = cos > 0 ? margins.left : margins.left - w;
-        while(xLow < gs.pageLayout.width - margins.right + gap) {
-            ctx.moveTo(xLow, gs.pageLayout.height - margins.bottom);
-            ctx.lineTo(xHigh, margins.top);
-            xLow += gap;
-            xHigh += gap;
-        }
-        ctx.clip(clipPath);
-        ctx.stroke();
-    } else {console.log("no diagonals")}
+    if (gs.row.diagonal1.isActive)
+        drawDiagonal(ctx, gs, gs.row.diagonal1, clipPath);
+    if (gs.row.diagonal2.isActive)
+        drawDiagonal(ctx, gs, gs.row.diagonal2, clipPath);
+
     ctx.restore();
 }
 
